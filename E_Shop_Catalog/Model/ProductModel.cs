@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
 namespace E_Shop_Catalog.Model
 {
@@ -9,7 +8,7 @@ namespace E_Shop_Catalog.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int Product_Id { get; set; }
+        public int Product_Id { get; }
         public string Product_Name { get; set; }
         public int Category_Id { get; set; }
         

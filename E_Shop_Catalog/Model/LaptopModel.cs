@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
 namespace E_Shop_Catalog.Model
 {
 
-    public class LaptopMdel
+    public class LaptopModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int Laptops_Id { get; set; }
+        public int Laptops_Id { get; }
         public string Category_Name { get; set; }
         public string Proccesor { get; set; }
         public string Graphic { get; set; }
