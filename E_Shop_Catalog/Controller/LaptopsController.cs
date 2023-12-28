@@ -1,22 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using E_Shop_Catalog.Model;
-using E_Shop_Catalog.Database;
-using Microsoft.EntityFrameworkCore;
+﻿using E_Shop_Catalog.Database;
 using E_Shop_Catalog.Interface;
+using E_Shop_Catalog.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_Shop_Catalog.Controller
 {
     [ApiController]
-    [Route("Products")]
-    public class ProductsController : ControllerBase, ICRUD
+    [Route("Laptops")]
+    public class LaptopsController : ControllerBase, ICRUD
     {
         private readonly DataBaseContext _context;
-        public ProductsController(DataBaseContext context)
+
+        public LaptopsController(DataBaseContext context)
         {
             _context = context;
         }
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ProductModel _model)
+        public async Task<IActionResult> Post([FromBody] LaptopModel _model)
         {
             try
             {
@@ -35,55 +36,52 @@ namespace E_Shop_Catalog.Controller
 
         }
         [HttpGet]
-        public IActionResult GetAll()
-        {
-            return Ok(_context.Product);
-        }
-        [HttpGet]
-        public async Task<IActionResult> GetByName(string Name)
-        {
-            try
-            {
-                var result = _context.Product.FindAsync(Name);
+        public async Task<IActionResult> GetByName(string Name) {
+            try {
+                var result = _context.Laptops.FindAsync(Name);
                 return Ok(result);
-            }
-            catch
-            {
+            } catch {
                 Console.WriteLine($"Cant found : {Name}");
                 return BadRequest($"Laptop with: {Name} wasn't found ");
             }
-
+           
         }
         [HttpGet]
-        [Route("Products/{Id}")]
+        public IActionResult GetAll()
+        {
+            return Ok(_context.Laptops);
+        }
+
+        [HttpGet]
+        [Route("Laptops/{Id}")]
         public async Task<IActionResult> GetByID(int Id)
         {
-            ProductModel result = await _context.Product.FindAsync(Id);
+            LaptopModel result = await _context.Laptops.FindAsync(Id);
             if (result == null)
             {
-                return BadRequest($"Product with: {Id} wasn't found ");
+                return BadRequest($"Laptop with: {Id} wasn't found ");
             }
             return Ok(result);
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteById(int Id)
         {
-            var result = _context.Product.SingleOrDefaultAsync(a => a.Product_Id == Id);
+            var result = _context.Laptops.SingleOrDefaultAsync(a => a.Laptops_Id == Id);
             if (result != null)
             {
-                _context.Product.Remove(await result);
+                _context.Laptops.Remove(await result);
                 _context.SaveChangesAsync();
                 return Ok("Delte Confirm");
             }
             return BadRequest("Incorect data");
         }
         [HttpDelete]
-        public async Task<IActionResult> DeleteByName(string Name)
-        {
-            var result = _context.Product.SingleOrDefaultAsync(a => a.Product_Name == Name);
+        public async Task<IActionResult> DeleteByName(string Name) {
+            var result = _context.Laptops.SingleOrDefaultAsync(a => a.Laptop_Name == Name);
             if (result != null)
             {
-                _context.Product.Remove(await result);
+                _context.Laptops.Remove(await result);
                 _context.SaveChangesAsync();
                 return Ok("Delte Confirm");
             }

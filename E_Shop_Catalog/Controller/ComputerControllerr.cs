@@ -1,22 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using E_Shop_Catalog.Model;
-using E_Shop_Catalog.Database;
-using Microsoft.EntityFrameworkCore;
+﻿using E_Shop_Catalog.Database;
 using E_Shop_Catalog.Interface;
+using E_Shop_Catalog.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_Shop_Catalog.Controller
 {
-    [ApiController]
-    [Route("Products")]
-    public class ProductsController : ControllerBase, ICRUD
+    public class ComputerControllerr : ControllerBase, ICRUD
     {
         private readonly DataBaseContext _context;
-        public ProductsController(DataBaseContext context)
+        public ComputerControllerr(DataBaseContext context)
         {
             _context = context;
         }
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ProductModel _model)
+        public async Task<IActionResult> Post([FromBody] ComputerModel _model)
         {
             try
             {
@@ -34,17 +33,11 @@ namespace E_Shop_Catalog.Controller
             }
 
         }
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            return Ok(_context.Product);
-        }
-        [HttpGet]
         public async Task<IActionResult> GetByName(string Name)
         {
-            try
+            try 
             {
-                var result = _context.Product.FindAsync(Name);
+                var result = _context.Computers.FindAsync(Name);
                 return Ok(result);
             }
             catch
@@ -55,10 +48,15 @@ namespace E_Shop_Catalog.Controller
 
         }
         [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(_context.Product);
+        }
+        [HttpGet]
         [Route("Products/{Id}")]
         public async Task<IActionResult> GetByID(int Id)
         {
-            ProductModel result = await _context.Product.FindAsync(Id);
+            ComputerModel result = await _context.Computers.FindAsync(Id);
             if (result == null)
             {
                 return BadRequest($"Product with: {Id} wasn't found ");
@@ -68,10 +66,10 @@ namespace E_Shop_Catalog.Controller
         [HttpDelete]
         public async Task<IActionResult> DeleteById(int Id)
         {
-            var result = _context.Product.SingleOrDefaultAsync(a => a.Product_Id == Id);
+            var result = _context.Computers.SingleOrDefaultAsync(a => a.Computers_Id == Id);
             if (result != null)
             {
-                _context.Product.Remove(await result);
+                _context.Computers.Remove(await result);
                 _context.SaveChangesAsync();
                 return Ok("Delte Confirm");
             }
@@ -80,10 +78,10 @@ namespace E_Shop_Catalog.Controller
         [HttpDelete]
         public async Task<IActionResult> DeleteByName(string Name)
         {
-            var result = _context.Product.SingleOrDefaultAsync(a => a.Product_Name == Name);
+            var result = _context.Computers.SingleOrDefaultAsync(a => a.Copmputer_Name == Name);
             if (result != null)
             {
-                _context.Product.Remove(await result);
+                _context.Computers.Remove(await result);
                 _context.SaveChangesAsync();
                 return Ok("Delte Confirm");
             }

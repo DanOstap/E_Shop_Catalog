@@ -10,6 +10,7 @@ namespace E_Shop_Catalog.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int Laptops_Id { get; }
+        public string Laptop_Name { get; set; }
         public string Category_Name { get; set; }
         public string Proccesor { get; set; }
         public string Graphic { get; set; }

@@ -1,5 +1,5 @@
 ﻿using E_Shop_Catalog.Database;
-using Microsoft.EntityFrameworkCore;
+	using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -8,6 +8,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataBaseContext>(options =>
 {
+
     try
     {
         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -17,7 +18,6 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
         Console.WriteLine("NO connection");
     }
 });
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

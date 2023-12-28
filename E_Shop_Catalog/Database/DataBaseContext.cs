@@ -10,9 +10,9 @@ namespace E_Shop_Catalog.Database
         public DbSet<ProductModel> Product { get; set; }
         public DbSet<LaptopModel> Laptops { get; set; }
         public DbSet<ComputerModel> Computers { get; set; }
-        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
-        {
-        }
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options) { }
+   
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
